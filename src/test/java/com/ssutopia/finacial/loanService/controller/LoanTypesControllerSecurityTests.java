@@ -70,13 +70,10 @@ public class LoanTypesControllerSecurityTests {
     @MockBean
     JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    @Mock
-    private UserPrincipalDetailsService userPrincipalDetailsService;
+
 
     MockMvc mvc;
 
-    LoanTypeDto mockLoanTypeDto = LoanTypeDto.builder()
-            .loanName("test1").build();
 
     LoanType mockLoanType = LoanType.builder()
             .id(1L)
@@ -130,7 +127,7 @@ public class LoanTypesControllerSecurityTests {
     }
 
     @Test
-    void test_getAllTickets_CanOnlyBePerformedByAdmin() throws Exception {
+    void test_createNewLoanType_CanOnlyBePerformedByAdmin() throws Exception {
         var mockDtoAsJson = new ObjectMapper().writeValueAsString(mockLoanType);
        mvc
                 .perform(
