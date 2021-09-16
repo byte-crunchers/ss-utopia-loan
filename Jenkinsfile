@@ -1,7 +1,30 @@
 pipeline {
+   options
+    {
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
     agent any
 
+    environment {
+        AWS_ACCOUNT_ID="422288715120"
+        AWS_DEFAULT_REGION="us-east-2" 
+        IMAGE_REPO_NAME="ss-utopia-loan"
+        IMAGE_TAG="latest"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    }
+
     stages {
+      
+        
+         stage('Logging into AWS ECR') {
+            steps {
+                script {
+                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                }
+                 
+            }
+        }
+
       stage('checkout') {
         steps {
           git branch: 'feature_jenkins', credentialsId: 'git_login', url: 'https://github.com/byte-crunchers/ss-utopia-loan.git'
@@ -41,11 +64,9 @@ pipeline {
             steps {
                 //sh 'docker push jbnilles/ss-utopia-loan:latest'
                 script {
-                  docker.withRegistry('https://22288715120.dkr.ecr.us-east-2.amazonaws.com/ss-utopia-loan',
-                  'ecr:us-east-2:ss-AWS') {
-                    docker.image('ss-utopia-loan').push('latest')
-                  }
-                }
+                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         }
             }
         }
     }
