@@ -7,12 +7,20 @@ pipeline {
           git branch: 'feature_jenkins', credentialsId: 'git_login', url: 'https://github.com/byte-crunchers/ss-utopia-loan.git'
         }
       }
+      stage("Clean install") {
+            
+            steps {
+              
+                  sh 'mvn clean install'
+              
+            }
+          }
         
         stage("SonarQube analysis") {
             agent any
             steps {
               withSonarQubeEnv('SonarQube') {
-                  sh 'mvn clean package sonar:sonar'
+                  sh 'mvn sonar:sonar'
               }
             }
           }
@@ -26,12 +34,18 @@ pipeline {
           }
           stage('Build') {
             steps {
-                    sh 'docker build . -t jbnilles/ss-utopia-loan:latest'
+                    sh 'docker build . -t ss-utopia-loan:latest'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'docker push jbnilles/ss-utopia-loan:latest'
+                //sh 'docker push jbnilles/ss-utopia-loan:latest'
+                script {
+                  docker.withRegistry('https://22288715120.dkr.ecr.us-east-2.amazonaws.com/ss-utopia-loan',
+                  'ecr:us-east-2:ss-AWS') {
+                    'ss-utopia-loan:latest'.push()
+                  }
+                }
             }
         }
     }
