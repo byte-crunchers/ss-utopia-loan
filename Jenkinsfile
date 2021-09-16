@@ -64,7 +64,7 @@ pipeline {
             steps {
                 //sh 'docker push jbnilles/ss-utopia-loan:latest'
                 script{
-                docker.withRegistry("$https://{AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com", 'ecr:us-east-2:ss-AWS') {
+                docker.withRegistry("https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com", 'ecr:us-east-2:ss-AWS') {
                 docker.image('ss-utopia-loan').push('latest')
 
         //         script {
