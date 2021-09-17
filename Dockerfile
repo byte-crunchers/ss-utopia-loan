@@ -4,4 +4,5 @@ RUN mkdir /app
 COPY . /app
 COPY /target/*.war /app/java-application.war
 WORKDIR /app
+EXPOSE 8084
 CMD "java" "-jar" "java-application.war"
