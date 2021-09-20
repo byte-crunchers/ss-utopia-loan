@@ -74,7 +74,7 @@ public class H2DataBootstrap implements CommandLineRunner {
 
         var LoanType2 = LoanType.builder()
                 .id(2L)
-                .loanName("Auto loan")
+                .loanName("Auto Loan")
                 .principal(30000.00f)
                 .InstallmentPayments(420.00f)
                 .yrsTerms(5.00f)
@@ -85,7 +85,7 @@ public class H2DataBootstrap implements CommandLineRunner {
 
         var LoanType3 = LoanType.builder()
                 .id(3L)
-                .loanName("Student loan")
+                .loanName("Student Loan")
                 .principal(50000.00f)
                 .InstallmentPayments(540.00f)
                 .yrsTerms(10.00f)
@@ -96,7 +96,7 @@ public class H2DataBootstrap implements CommandLineRunner {
 
         var LoanType4 = LoanType.builder()
                 .id(4L)
-                .loanName("Personal loan")
+                .loanName("Personal Loan")
                 .principal(30000.00f)
                 .InstallmentPayments(500.00f)
                 .yrsTerms(4.00f)
@@ -107,12 +107,12 @@ public class H2DataBootstrap implements CommandLineRunner {
 
         var LoanType5 = LoanType.builder()
                 .id(5L)
-                .loanName("Payday loan")
+                .loanName("Payday Loan")
                 .principal(800.00f)
-                .InstallmentPayments(2800.00f)
-                .yrsTerms(0.03833f)
+                .InstallmentPayments(360.00f)
+                .yrsTerms(0.5f)
                 .isSecured(false)
-                .interestRate(200.00f)
+                .interestRate(0.325f)
                 .build();
         loanTypeRepository.save(LoanType5);
 
