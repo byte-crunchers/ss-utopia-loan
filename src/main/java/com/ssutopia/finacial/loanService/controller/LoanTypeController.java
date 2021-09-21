@@ -1,9 +1,12 @@
 package com.ssutopia.finacial.loanService.controller;
 
+import com.ssutopia.finacial.loanService.entity.LoanForm;
 import com.ssutopia.finacial.loanService.dto.LoanTypeDto;
 import com.ssutopia.finacial.loanService.entity.LoanType;
 import com.ssutopia.finacial.loanService.service.LoanTypeService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +41,38 @@ public class LoanTypeController {
         return ResponseEntity.ok(LoanType);
     }
 
+	// receive loan application form & print to console
+	@PostMapping(path = "/form", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> applyForLoan(@RequestBody LoanForm newLoanForm) {
+		System.out.println("Received new loan application form:");
+		System.out.println(newLoanForm.toString());
+		delay();
+		return new ResponseEntity<>("", HttpStatus.CREATED);
+	}
 
+	// pretend to think for a few seconds while processing the form
+	private void delay() {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 }
