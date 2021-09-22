@@ -79,10 +79,9 @@ public class LoanTypesControllerSecurityTests {
             .id(1L)
             .loanName("test1")
             .isSecured(false)
-            .interestRate(0.0f)
-            .principal(500.00f)
-            .InstallmentPayments(3.00f)
-            .yrsTerms(1.00f)
+            .upperRange(0.10f)
+            .lowerRange(0.05f)
+            .lateFee(3.00f)
             .build();
 
     User mockAdminUser = User.builder()

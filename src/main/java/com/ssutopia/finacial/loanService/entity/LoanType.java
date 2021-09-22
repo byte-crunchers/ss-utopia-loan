@@ -27,19 +27,15 @@ public class LoanType {
 
     @NotNull
     @Builder.Default
-    private float yrsTerms = 0.0f;
+    private float upperRange = 0.0f;
 
     @NotNull
     @Builder.Default
-    private float principal = 0.0f;
+    private float lowerRange = 0.0f;
 
     @NotNull
     @Builder.Default
-    private float interestRate = 0.0f;
-
-    @NotNull
-    @Builder.Default
-    private float InstallmentPayments = 0.0f;
+    private float lateFee = 0.0f;
 
     private boolean isSecured;
 

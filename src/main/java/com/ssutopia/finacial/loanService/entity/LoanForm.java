@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoanForm {
 
-	private String loanType, firstName, lastName, email, phone, principal, term;
+	private String loanType, firstName, lastName, email, phone, principal, term, interestRate, monthlyPayment;
 
 	public String toString() {
 		StringBuilder result = new StringBuilder();

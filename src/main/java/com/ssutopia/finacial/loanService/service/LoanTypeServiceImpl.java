@@ -36,11 +36,10 @@ public class LoanTypeServiceImpl implements LoanTypeService{
                 });
         var loanType = LoanType.builder()
                 .loanName(loanTypeDto.getLoanName())
-                .InstallmentPayments(loanTypeDto.getInstallmentPayments())
-                .interestRate(loanTypeDto.getInterestRate())
+                .upperRange(loanTypeDto.getUpperRange())
+                .lowerRange(loanTypeDto.getLowerRange())
+                .lateFee(loanTypeDto.getLateFee())
                 .isSecured(loanTypeDto.isSecured())
-                .principal(loanTypeDto.getPrincipal())
-                .yrsTerms(loanTypeDto.getYrsTerms())
                 .build();
 
         loanType = loanTypeRepository.save(loanType);
