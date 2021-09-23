@@ -15,9 +15,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoanForm {
 
-	private String loanType, firstName, lastName, email, phone, principal, term, interestRate, monthlyPayment;
+	private String loanType, firstName, lastName, email, phone, income, principal, term, interestRate, monthlyPayment;
 
-	public String toString() {
+	// print all variables to console
+	public void printFields() {
 		StringBuilder result = new StringBuilder();
 		String newLine = System.getProperty("line.separator");
 
@@ -36,7 +37,7 @@ public class LoanForm {
 		}
 		result.append("}");
 
-		return result.toString();
+		System.out.println(result.toString());
 	}
 
 }
