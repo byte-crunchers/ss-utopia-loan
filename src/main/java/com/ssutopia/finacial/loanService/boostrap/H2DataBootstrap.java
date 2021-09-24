@@ -63,56 +63,51 @@ public class H2DataBootstrap implements CommandLineRunner {
         var LoanType1 = LoanType.builder()
                 .id(1L)
                 .loanName("Mortgage")
-                .principal(500000.00f)
-                .InstallmentPayments(2800.00f)
-                .yrsTerms(25.00f)
+                .upperRange(0.0065f)
+                .lowerRange(0.0026f)                
+                .lateFee(25.00f)
                 .isSecured(true)
-                .interestRate(0.004f)
                 .build();
 
         loanTypeRepository.save(LoanType1);
 
         var LoanType2 = LoanType.builder()
                 .id(2L)
-                .loanName("Auto loan")
-                .principal(30000.00f)
-                .InstallmentPayments(420.00f)
-                .yrsTerms(5.00f)
+                .loanName("Auto Loan")
+                .upperRange(0.0116f)
+                .lowerRange(0.0027f)                
+                .lateFee(25.00f)
                 .isSecured(true)
-                .interestRate(0.00499f)
                 .build();
         loanTypeRepository.save(LoanType2);
 
         var LoanType3 = LoanType.builder()
                 .id(3L)
-                .loanName("Student loan")
-                .principal(50000.00f)
-                .InstallmentPayments(540.00f)
-                .yrsTerms(10.00f)
+                .loanName("Student Loan")
+                .upperRange(0.01f)
+                .lowerRange(0.0025f)                
+                .lateFee(25.00f)
                 .isSecured(false)
-                .interestRate(0.0035f)
                 .build();
         loanTypeRepository.save(LoanType3);
 
         var LoanType4 = LoanType.builder()
                 .id(4L)
-                .loanName("Personal loan")
-                .principal(30000.00f)
-                .InstallmentPayments(500.00f)
-                .yrsTerms(4.00f)
+                .loanName("Personal Loan")
+                .upperRange(0.03f)
+                .lowerRange(0.005f)                
+                .lateFee(35.00f)
                 .isSecured(false)
-                .interestRate(0.01499f)
                 .build();
         loanTypeRepository.save(LoanType4);
 
         var LoanType5 = LoanType.builder()
                 .id(5L)
-                .loanName("Payday loan")
-                .principal(800.00f)
-                .InstallmentPayments(2800.00f)
-                .yrsTerms(0.03833f)
+                .loanName("Payday Loan")
+                .upperRange(0.43f)
+                .lowerRange(0.325f)                
+                .lateFee(50.00f)
                 .isSecured(false)
-                .interestRate(200.00f)
                 .build();
         loanTypeRepository.save(LoanType5);
 

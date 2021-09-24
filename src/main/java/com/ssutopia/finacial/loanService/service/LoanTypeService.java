@@ -1,6 +1,7 @@
 package com.ssutopia.finacial.loanService.service;
 
 import com.ssutopia.finacial.loanService.dto.LoanTypeDto;
+import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanType;
 
 import java.util.List;
