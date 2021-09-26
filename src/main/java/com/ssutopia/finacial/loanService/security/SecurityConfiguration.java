@@ -42,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, EndpointConstants.API_V_0_1_LOANTYPES).hasRole("ADMIN")
                 //for Admin and user role to view card types
                 .antMatchers(HttpMethod.GET,EndpointConstants.API_V_0_1_LOANTYPES).hasAnyRole("ADMIN","USER")
+                //for Admin and user role to view card types
+                .antMatchers("/loans/*").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated();
         ;
     }
