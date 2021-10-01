@@ -55,7 +55,7 @@ public class LoanController {
 	}
 
 	// get all loans by user id
-	@GetMapping(path = "/user/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(path = "/myloans/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public List<Loan> getLoansByUserId(@PathVariable Integer id) {
 		return loanService.getLoansByUserId(id);
 	}

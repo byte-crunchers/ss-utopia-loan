@@ -76,8 +76,8 @@ public class H2DataBootstrap implements CommandLineRunner {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     	Loan loan1 = new Loan(1, "Student Loan", 30000f, 0.00625f, 278.1037f, 278.1037f, LocalDate.parse("2021-10-26", formatter), true, true, true); 
-    	Loan loan2 = new Loan(1, "Mortgage", 500000f, 0.00325f, 0f, 2611.6548f, LocalDate.parse("2021-11-27", formatter), true, true, true); 
-    	Loan loan3 = new Loan(1, "Auto Loan", 10000f, 0.008633333f, 134.15228f, 134.15228f, LocalDate.parse("2021-10-28", formatter), true, true, true);
+    	Loan loan2 = new Loan(1, "Mortgage", 500000f, 0.00325f, 2611.6548f, 2611.6548f, LocalDate.parse("2021-10-27", formatter), true, true, true); 
+    	Loan loan3 = new Loan(1, "Auto Loan", 10000f, 0.008633333f, 0f, 134.15228f, LocalDate.parse("2021-11-28", formatter), true, true, true);
     	Loan loan4 = new Loan(1, "Personal Loan", 10000f, 0.008633333f, 134.15228f, 134.15228f, LocalDate.parse("2021-10-29", formatter), false, false, false);
     	
     	loanRepository.save(loan1);
