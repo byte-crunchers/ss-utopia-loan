@@ -36,6 +36,16 @@ public class User {
 
     private String permissions = "";
 
+    private String firstName = "";
+
+    private String lastName = "";
+
+    private Long phone = 0L;
+
+    private String email = "";
+
+    private Float income = 0f;
+
     public List<String> getRoleList(){
         if(this.roles.length() > 0){
             return Arrays.asList(this.roles.split(","));

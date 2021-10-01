@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Getter;
@@ -23,16 +25,16 @@ public class Loan {
 
 	// all columns in the loans table
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private Integer usersId;
 	private String loanType;
 	private Float balance, interestRate, paymentDue, monthlyPayment;
 	private LocalDate dueDate;
-	private Boolean isActive;
+	private Boolean isActive, isApproved, isConfirmed;
 
-	public Loan(Long id, Integer usersId, String loanType, Float balance, Float interestRate, Float paymentDue,
-			Float monthlyPayment, LocalDate dueDate, Boolean isActive) {
-		this.id = id;
+	public Loan(Integer usersId, String loanType, Float balance, Float interestRate, Float paymentDue,
+			Float monthlyPayment, LocalDate dueDate, Boolean isActive, Boolean isApproved, Boolean isConfirmed) {
 		this.usersId = usersId;
 		this.loanType = loanType;
 		this.balance = balance;
@@ -41,6 +43,8 @@ public class Loan {
 		this.monthlyPayment = monthlyPayment;
 		this.dueDate = dueDate;
 		this.isActive = isActive;
+		this.isApproved = isApproved;
+		this.isConfirmed = isConfirmed;
 	}
 
 	// print all variables to console

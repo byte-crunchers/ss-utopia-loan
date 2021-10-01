@@ -35,6 +35,14 @@ public class LoanType {
 
     @NotNull
     @Builder.Default
+    private int termMin = 0;
+
+    @NotNull
+    @Builder.Default
+    private int termMax = 0;
+
+    @NotNull
+    @Builder.Default
     private float lateFee = 0.0f;
 
     private boolean isSecured;

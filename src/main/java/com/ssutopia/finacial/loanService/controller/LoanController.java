@@ -1,6 +1,7 @@
 package com.ssutopia.finacial.loanService.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,16 @@ public class LoanController {
 		return ResponseEntity.created(location).build();
 	}
 
-	// get a single loan instance
+	// get 1 loan by id
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Optional<Loan> getLoan(@PathVariable Long id) {
 		return loanService.getLoan(id);
+	}
+
+	// get all loans by user id
+	@GetMapping(path = "/user/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public List<Loan> getLoansByUserId(@PathVariable Integer id) {
+		return loanService.getLoansByUserId(id);
 	}
 
 	// pretend to think for a few seconds while processing the form
