@@ -76,8 +76,8 @@ public class LoanTypesControllerSecurityTests {
 
 
     LoanType mockLoanType = LoanType.builder()
-            .id(1L)
-            .loanName("test1")
+//            .id(1L)
+            .id("test1")
             .isSecured(false)
             .upperRange(0.10f)
             .lowerRange(0.05f)
@@ -111,7 +111,7 @@ public class LoanTypesControllerSecurityTests {
 
     when(loanTypeRepository.save(any(LoanType.class))).thenReturn( mockLoanType);
     when(userRepository.findByUsername(any())).thenReturn(mockAdminUser);
-    when(loanTypeService.createNewLoanType(any())).thenReturn(mockLoanType);
+//    when(loanTypeService.createNewLoanType(any())).thenReturn(mockLoanType);
 
 }
 
