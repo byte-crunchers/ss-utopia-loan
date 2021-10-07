@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoanForm {
 
+	private Long userId;
 	private String loanType, firstName, lastName, email, phone, income, principal, term, interestRate, monthlyPayment;
 
 	// print all variables to console

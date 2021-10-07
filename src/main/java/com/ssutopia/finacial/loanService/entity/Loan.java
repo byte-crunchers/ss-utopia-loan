@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +21,7 @@ import lombok.Setter;
  */
 
 @Entity
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,15 +31,19 @@ public class Loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private Integer usersId;
 	private String loanType;
 	private Float balance, interestRate, paymentDue, monthlyPayment;
 	private LocalDate dueDate;
 	private Boolean isActive, isApproved, isConfirmed;
 
-	public Loan(Integer usersId, String loanType, Float balance, Float interestRate, Float paymentDue,
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id")
+    private User user;
+	
+	public Loan(User user, String loanType, Float balance, Float interestRate, Float paymentDue,
 			Float monthlyPayment, LocalDate dueDate, Boolean isActive, Boolean isApproved, Boolean isConfirmed) {
-		this.usersId = usersId;
+		this.user = user;
 		this.loanType = loanType;
 		this.balance = balance;
 		this.interestRate = interestRate;

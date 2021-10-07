@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanForm;
 import com.ssutopia.finacial.loanService.service.LoanService;
@@ -56,7 +57,7 @@ public class LoanController {
 
 	// get all loans by user id
 	@GetMapping(path = "/myloans/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<Loan> getLoansByUserId(@PathVariable Integer id) {
+	public List<LoanStatusDto> getLoansByUserId(@PathVariable Long id) {
 		return loanService.getLoansByUserId(id);
 	}
 
