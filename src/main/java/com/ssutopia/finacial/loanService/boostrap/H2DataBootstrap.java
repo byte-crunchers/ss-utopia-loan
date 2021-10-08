@@ -8,14 +8,16 @@ import com.ssutopia.finacial.loanService.repository.LoanTypeRepository;
 import com.ssutopia.finacial.loanService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Date;
 
+import java.time.LocalDate;
+
+
+@Profile("!test")
 @Component
 @RequiredArgsConstructor
 public class H2DataBootstrap implements CommandLineRunner {

@@ -4,14 +4,17 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssutopia.finacial.loanService.dto.LoanTypeDto;
+import com.ssutopia.finacial.loanService.entity.LoanSummary;
 import com.ssutopia.finacial.loanService.entity.LoanType;
 import com.ssutopia.finacial.loanService.entity.User;
+import com.ssutopia.finacial.loanService.repository.LoanRepository;
 import com.ssutopia.finacial.loanService.repository.LoanTypeRepository;
 import com.ssutopia.finacial.loanService.repository.UserRepository;
 import com.ssutopia.finacial.loanService.security.JwtAuthorizationFilter;
 import com.ssutopia.finacial.loanService.security.JwtProperties;
 import com.ssutopia.finacial.loanService.security.UserPrincipal;
 import com.ssutopia.finacial.loanService.security.UserPrincipalDetailsService;
+import com.ssutopia.finacial.loanService.service.LoanService;
 import com.ssutopia.finacial.loanService.service.LoanTypeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +32,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -46,6 +50,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class LoanTypesControllerSecurityTests {
 
@@ -58,6 +63,12 @@ public class LoanTypesControllerSecurityTests {
 
     @MockBean
     LoanTypeService loanTypeService;
+
+    @MockBean
+    LoanRepository loanRepository;
+
+    @MockBean
+    LoanService loanService;
 
     @MockBean
     LoanTypeRepository loanTypeRepository;
@@ -74,9 +85,39 @@ public class LoanTypesControllerSecurityTests {
 
     MockMvc mvc;
 
+    LoanSummary loanSummary1 = LoanSummary.builder()
+            .id(1L)
+            .LoanType("Student loan")
+            .balance(9000f)
+            .first_name("Tim")
+            .monthly_payment(1600f)
+            .interest_rate(0.03f)
+            .late_fee(67)
+            .build();
+
+
+    LoanSummary loanSummary2 = LoanSummary.builder()
+            .id(2L)
+            .LoanType("Student loan")
+            .balance(9000f)
+            .first_name("Tim")
+            .monthly_payment(1600f)
+            .interest_rate(0.03f)
+            .late_fee(67)
+            .build();
+
+    LoanSummary loanSummary3 = LoanSummary.builder()
+            .id(3L)
+            .LoanType("Student loan")
+            .balance(9000f)
+            .first_name("Tim")
+            .monthly_payment(1600f)
+            .interest_rate(0.03f)
+            .late_fee(67)
+            .build();
 
     LoanType mockLoanType = LoanType.builder()
-//            .id(1L)
+
             .id("test1")
             .isSecured(false)
             .upperRange(0.10f)
@@ -111,7 +152,10 @@ public class LoanTypesControllerSecurityTests {
 
     when(loanTypeRepository.save(any(LoanType.class))).thenReturn( mockLoanType);
     when(userRepository.findByUsername(any())).thenReturn(mockAdminUser);
-//    when(loanTypeService.createNewLoanType(any())).thenReturn(mockLoanType);
+    when(loanTypeService.createNewLoanType(any())).thenReturn(mockLoanType);
+    when(loanRepository.getAllLoans()).thenReturn(List.of(loanSummary1,loanSummary2,loanSummary3));
+    when(loanService.getAllLoans()).thenReturn(List.of(loanSummary1,loanSummary2,loanSummary3));
+
 
 }
 
@@ -145,6 +189,22 @@ public class LoanTypesControllerSecurityTests {
 
                 .andExpect(status().isForbidden());
     }
+
+
+
+    @Test
+    void test_getAllLoan_CanBeOnlyPerformByAdmin() throws Exception{
+        mvc.perform(
+                get(EndpointConstants.API_V_0_1_LOANS)
+                .header("Authorization", getJwt(MockUser.ADMIN)))
+        .andExpect(status().isOk());
+
+        mvc.perform(
+                get(EndpointConstants.API_V_0_1_LOANS))
+                .andExpect(status().isForbidden());
+
+    }
+
 
     @Test
     void test_createNewLoanType_CanBeForbiddenByNormalUser() throws Exception{
