@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanForm;
+import com.ssutopia.finacial.loanService.entity.LoanPayment;
 import com.ssutopia.finacial.loanService.service.LoanService;
 
 @RestController
@@ -48,11 +49,39 @@ public class LoanController {
 		// return status code 201
 		return ResponseEntity.created(location).build();
 	}
+	
+	// receive loan payment form, store in db, & print to console
+	@PostMapping(path = "/payment", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<?> applyForLoan(@RequestBody LoanPayment paymentForm) {
+
+		System.out.println("Received a new loan payment:");
+
+		delay();
+
+		LoanPayment payment = loanService.createNewPayment(paymentForm);
+
+		System.out.println("Payment:");
+		payment.printFields();
+
+		// set location header
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(payment.getId())
+				.toUri();
+
+		// return status code 201
+		return ResponseEntity.created(location).build();
+	}
+	
 
 	// get 1 loan by id
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Optional<Loan> getLoan(@PathVariable Long id) {
 		return loanService.getLoan(id);
+	}
+
+	// get 1 loan payment by id
+	@GetMapping(path = "/payment/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public Optional<LoanPayment> getLoanPayment(@PathVariable Long id) {
+		return loanService.getLoanPayment(id);
 	}
 
 	// get all loans by user id
