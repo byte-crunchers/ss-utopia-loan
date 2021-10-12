@@ -30,7 +30,17 @@ public class User {
     @NotBlank
     private String password;
 
+    private String email;
+
+    private String first_name;
+
+    private String last_name;
+
     private int active;
+
+    private String address;
+
+    private boolean is_admin;
 
     private String roles = "";
 
@@ -49,7 +59,5 @@ public class User {
         }
         return new ArrayList<>();
     }
-
-
-
 }
+

@@ -2,13 +2,12 @@ package com.ssutopia.finacial.loanService.entity;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 /*
  * A loan is generated when a user submits a loan application form.
@@ -16,32 +15,42 @@ import lombok.Setter;
  */
 
 @Entity
-@Getter
-@Setter
+@Builder
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
+
 public class Loan {
 
 	// all columns in the loans table
 	@Id
 	private Long id;
-	private Integer usersId;
-	private String loanType;
+
 	private Float balance, interestRate, paymentDue, monthlyPayment;
 	private LocalDate dueDate;
-	private Boolean isActive;
+	private boolean active ;
 
-	public Loan(Long id, Integer usersId, String loanType, Float balance, Float interestRate, Float paymentDue,
-			Float monthlyPayment, LocalDate dueDate, Boolean isActive) {
-		this.id = id;
-		this.usersId = usersId;
-		this.loanType = loanType;
-		this.balance = balance;
-		this.interestRate = interestRate;
-		this.paymentDue = paymentDue;
-		this.monthlyPayment = monthlyPayment;
-		this.dueDate = dueDate;
-		this.isActive = isActive;
-	}
+	private boolean approved ;
+
+	private boolean confirmed;
+
+
+
+
+	@OneToMany(mappedBy="loan")
+	private Set<LoanPayments> loanPayments;
+
+
+	@ManyToOne
+	@JoinColumn(
+			name = "loan_type")
+	private LoanType loanType;
+
+
+	@ManyToOne
+	@JoinColumn(
+			name = "users_id")
+	private User users;
 
 	// print all variables to console
 	public void printFields() {

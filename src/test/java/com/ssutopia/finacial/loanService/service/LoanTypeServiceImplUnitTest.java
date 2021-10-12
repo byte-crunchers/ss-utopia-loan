@@ -21,28 +21,26 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class LoanTypeServiceImplUnitTest {
-    private static LoanType loan1, loan2, loan3;
+    private static LoanType loanType1, loanType2, loanType3;
     private static LoanTypeDto loanTypeDto;
     private final LoanTypeRepository repository = Mockito.mock(LoanTypeRepository.class);
     private final LoanTypeService service = new LoanTypeServiceImpl(repository);
 
     @BeforeAll
     static void beforeAll(){
-        loan1 = LoanType.builder()
-                .id(1L)
-                .loanName("test1")
+        loanType1 = LoanType.builder()
+                .id
+                ("test1")
                 .isSecured(false)
                 .build();
 
-        loan2 = LoanType.builder()
-                .id(2L)
-                .loanName("test2")
+        loanType2 = LoanType.builder()
+                .id("test2")
                 .isSecured(false)
                 .build();
 
-        loan3 = LoanType.builder()
-                .id(3L)
-                .loanName("test3")
+        loanType3 = LoanType.builder()
+                .id("test3")
                 .isSecured(false)
                 .build();
     }
@@ -54,34 +52,36 @@ public class LoanTypeServiceImplUnitTest {
 
     @Test
     void test_createNewLoanTypes_ReturnsLoanTypesWithExpectedValuesOnSuccess() {
-        when(repository.save(any(LoanType.class))).thenReturn(loan1);
+        when(repository.save(any(LoanType.class))).thenReturn(loanType1);
         var result = service.createNewLoanType(loanTypeDto.builder()
-        .loanName(loan1.getLoanName())
-                .isSecured(loan1.isSecured())
+        .id(loanType1.getId())
+                .isSecured(loanType1.isSecured())
         .build())
                 ;
-        assertEquals(loan1, result);
+        assertEquals(loanType1, result);
     }
+
+
 
 
     @Test
     void test_getAllLoanTypes_ReturnsAllLoanTypes() {
-        when(repository.findAll()).thenReturn(List.of(loan1,loan2,loan3));
+        when(repository.findAll()).thenReturn(List.of(loanType1,loanType2,loanType3));
 
         var loanTypes = service.getAllLoanTypes();
-        var expectedloanTypes = List.of(loan1,loan2,loan3);
+        var expectedloanTypes = List.of(loanType1,loanType2,loanType3);
 
         assertEquals(expectedloanTypes, loanTypes);
     }
 
     @Test
     void test_createNewLoanType_ThrowsDuplicateLoanTypeNameExceptionOnDuplicateLoanTypeNameRecord() {
-        when(repository.findByLoanName(loan1.getLoanName())).thenReturn(Optional.of(loan1));
+        when(repository.findById(loanType1.getId())).thenReturn(Optional.of(loanType1));
 
 //        repository.save(loan2);
         assertThrows(DuplicateLoanNameException.class,
                 () -> service.createNewLoanType(loanTypeDto.builder()
-                        .loanName(loan1.getLoanName())
+                        .id(loanType1.getId())
                         .build()));
     }
 

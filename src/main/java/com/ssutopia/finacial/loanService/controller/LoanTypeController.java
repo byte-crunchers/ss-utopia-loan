@@ -33,7 +33,9 @@ public class LoanTypeController {
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<LoanType> createNewLoanType(@Valid @RequestBody LoanTypeDto loanTypeDto) {
 		var loanType = loanTypeService.createNewLoanType(loanTypeDto);
-		var uri = URI.create(MAPPING + "/" + loanType.getId());
+		String loanTypeName = loanType.getId();
+		loanTypeName = loanTypeName.replaceAll("\\s+","");
+		var uri = URI.create(MAPPING+"/"+loanTypeName);
 		return ResponseEntity.created(uri).body(loanType);
 	}
 
@@ -48,20 +50,20 @@ public class LoanTypeController {
 	}
 
 	// receive loan application form, store in db, & print to console
-	@PostMapping(path = "/form", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-			MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> applyForLoan(@RequestBody LoanForm newLoanForm) {
-		System.out.println("Received a new loan application form:");
-		newLoanForm.printFields();
-
-		delay();
-
-		Loan loan = loanService.createNewLoan(newLoanForm);
-		System.out.println("Created a new loan instance:");
-		loan.printFields();
-
-		return new ResponseEntity<>("", HttpStatus.CREATED);
-	}
+//	@PostMapping(path = "/form", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+//			MediaType.TEXT_PLAIN_VALUE })
+//	public ResponseEntity<String> applyForLoan(@RequestBody LoanForm newLoanForm) {
+//		System.out.println("Received a new loan application form:");
+//		newLoanForm.printFields();
+//
+//		delay();
+//
+//		Loan loan = loanService.createNewLoan(newLoanForm);
+//		System.out.println("Created a new loan instance:");
+//		loan.printFields();
+//
+//		return new ResponseEntity<>("", HttpStatus.CREATED);
+//	}
 
 	// pretend to think for a few seconds while processing the form
 	private void delay() {

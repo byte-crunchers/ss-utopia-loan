@@ -29,13 +29,13 @@ public class LoanTypeServiceImpl implements LoanTypeService{
     @Transactional
     public LoanType createNewLoanType(LoanTypeDto loanTypeDto) {
         validateDto(loanTypeDto);
-        log.debug("Create new loan type=" + loanTypeDto.getLoanName());
-        loanTypeRepository.findByLoanName(loanTypeDto.getLoanName())
+        log.debug("Create new loan type=" + loanTypeDto.getId());
+        loanTypeRepository.findById(loanTypeDto.getId())
                 .ifPresent(loanType -> {
-                    throw new DuplicateLoanNameException(loanType.getLoanName());
+                    throw new DuplicateLoanNameException(loanType.getId());
                 });
         var loanType = LoanType.builder()
-                .loanName(loanTypeDto.getLoanName())
+                .id(loanTypeDto.getId())
                 .upperRange(loanTypeDto.getUpperRange())
                 .lowerRange(loanTypeDto.getLowerRange())
                 .lateFee(loanTypeDto.getLateFee())
