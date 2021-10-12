@@ -2,18 +2,12 @@ package com.ssutopia.finacial.loanService.entity;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 /*
  * A loan is generated when a user submits a loan application form.
@@ -21,9 +15,9 @@ import lombok.Setter;
  */
 
 @Entity
+@Builder
 @Data
-@Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Loan {
 
@@ -31,29 +25,34 @@ public class Loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private String loanType;
+
+
 	private Float balance, interestRate, paymentDue, monthlyPayment;
 	private LocalDate dueDate;
-	private Boolean isActive, isApproved, isConfirmed;
+	private boolean active ;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "user_id")
-    private User user;
-	
-	public Loan(User user, String loanType, Float balance, Float interestRate, Float paymentDue,
-			Float monthlyPayment, LocalDate dueDate, Boolean isActive, Boolean isApproved, Boolean isConfirmed) {
-		this.user = user;
-		this.loanType = loanType;
-		this.balance = balance;
-		this.interestRate = interestRate;
-		this.paymentDue = paymentDue;
-		this.monthlyPayment = monthlyPayment;
-		this.dueDate = dueDate;
-		this.isActive = isActive;
-		this.isApproved = isApproved;
-		this.isConfirmed = isConfirmed;
-	}
+	private boolean approved ;
+
+	private boolean confirmed;
+
+
+
+
+	@OneToMany(mappedBy="loan")
+	private Set<LoanPayments> loanPayments;
+
+
+	@ManyToOne
+	@JoinColumn(
+			name = "loan_type")
+	private LoanType loanType;
+
+
+	@ManyToOne
+	@JoinColumn(
+			name = "users_id")
+	private User users;
+
 
 	// print all variables to console
 	public void printFields() {

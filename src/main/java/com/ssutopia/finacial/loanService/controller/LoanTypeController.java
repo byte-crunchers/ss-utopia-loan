@@ -32,7 +32,9 @@ public class LoanTypeController {
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<LoanType> createNewLoanType(@Valid @RequestBody LoanTypeDto loanTypeDto) {
 		var loanType = loanTypeService.createNewLoanType(loanTypeDto);
-		var uri = URI.create(MAPPING + "/" + loanType.getId());
+		String loanTypeName = loanType.getId();
+		loanTypeName = loanTypeName.replaceAll("\\s+","");
+		var uri = URI.create(MAPPING+"/"+loanTypeName);
 		return ResponseEntity.created(uri).body(loanType);
 	}
 
@@ -45,5 +47,6 @@ public class LoanTypeController {
 		}
 		return ResponseEntity.ok(LoanType);
 	}
+
 
 }

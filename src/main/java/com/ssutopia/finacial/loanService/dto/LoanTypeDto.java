@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -13,8 +14,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 public class LoanTypeDto {
-    @NotBlank
-    private String loanName;
+    @Id
+    private String id;
 
     @NotNull
     @Builder.Default

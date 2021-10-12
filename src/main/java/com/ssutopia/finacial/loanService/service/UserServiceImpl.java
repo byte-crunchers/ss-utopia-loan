@@ -1,6 +1,7 @@
 package com.ssutopia.finacial.loanService.service;
 
 import com.ssutopia.finacial.loanService.entity.User;
+
 import com.ssutopia.finacial.loanService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

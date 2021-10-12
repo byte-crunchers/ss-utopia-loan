@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.ssutopia.finacial.loanService.entity.LoanSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,8 @@ import com.ssutopia.finacial.loanService.repository.LoanRepository;
 import com.ssutopia.finacial.loanService.repository.UserRepository;
 
 @Service
-public class LoanService {
+public interface LoanService {
+
 
 	@Autowired
 	private LoanRepository loanRepository;
@@ -40,6 +42,10 @@ public class LoanService {
 
 		return loanRepository.save(loan);
 	}
+
+	List<LoanSummary> getAllLoans();
+
+
 
 	// store loan payment, & modify loan balance
 	@Transactional
@@ -94,3 +100,4 @@ public class LoanService {
 	 * 
 	 */
 }
+

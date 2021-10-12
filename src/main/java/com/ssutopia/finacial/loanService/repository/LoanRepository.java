@@ -8,9 +8,20 @@ import org.springframework.stereotype.Repository;
 
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
+import com.ssutopia.finacial.loanService.entity.LoanSummary;
+
+import org.springframework.data.repository.CrudRepository;
+
+
 
 @Repository
-public interface LoanRepository extends JpaRepository<Loan, Long> {
+public interface LoanRepository extends CrudRepository<Loan, Long> {
+    @Query("select new com.ssutopia.finacial.loanService.entity.LoanSummary" +
+            "( l.id,l.users.first_name,l.users.last_name,l.balance" +
+
+            ",l.loanType.id,l.monthlyPayment,l.interestRate,l.loanType.lateFee,l.dueDate) " +
+            "from User u, Loan l where l.users = u ")
+    List<LoanSummary> getAllLoans();
 
     @Query(
             "select new com.ssutopia.finacial.loanService.dto.LoanStatusDto" +

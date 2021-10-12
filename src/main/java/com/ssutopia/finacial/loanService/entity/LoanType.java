@@ -19,11 +19,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class LoanType {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank
-    private String loanName;
+    private String id;
 
     @NotNull
     @Builder.Default
@@ -46,5 +42,10 @@ public class LoanType {
     private float lateFee = 0.0f;
 
     private boolean isSecured;
+
+    private int term_min;
+
+    private int term_max;
+
 
 }
