@@ -19,26 +19,23 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Loan {
 
 	// all columns in the loans table
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+
 
 	private Float balance, interestRate, paymentDue, monthlyPayment;
 	private LocalDate dueDate;
 	private boolean active ;
-
 	private boolean approved ;
-
 	private boolean confirmed;
 
 
-
-
-	@OneToMany(mappedBy="loan")
-	private Set<LoanPayments> loanPayments;
+//	@OneToMany(mappedBy="loan")
+//	private Set<LoanPayments> loanPayments;
 
 
 	@ManyToOne
@@ -51,6 +48,7 @@ public class Loan {
 	@JoinColumn(
 			name = "users_id")
 	private User users;
+
 
 	// print all variables to console
 	public void printFields() {

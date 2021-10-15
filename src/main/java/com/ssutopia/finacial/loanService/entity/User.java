@@ -21,16 +21,14 @@ import java.util.List;
 @Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
     private String username;
 
     @NotBlank
     private String password;
-
-    private String email;
 
     private String first_name;
 
@@ -45,6 +43,12 @@ public class User {
     private String roles = "";
 
     private String permissions = "";
+
+    private Long phone = 0L;
+
+    private String email = "";
+
+    private Float income = 0f;
 
     public List<String> getRoleList(){
         if(this.roles.length() > 0){

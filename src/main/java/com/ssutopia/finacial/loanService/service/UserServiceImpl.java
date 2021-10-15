@@ -5,6 +5,9 @@ import com.ssutopia.finacial.loanService.entity.User;
 import com.ssutopia.finacial.loanService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -17,4 +20,5 @@ public class UserServiceImpl implements UserService{
     public User findUserByUsername(String name) {
         return userRepository.findByUsername(name);
     }
+    
 }

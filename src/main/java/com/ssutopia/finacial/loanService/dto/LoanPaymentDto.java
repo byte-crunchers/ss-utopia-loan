@@ -1,23 +1,38 @@
-package com.ssutopia.finacial.loanService.entity;
+
+package com.ssutopia.finacial.loanService.dto;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /*
- * Stores form data when a user submits a loan application form.
+ * Stores form data when a user submits a loan payment
  */
 
+@Entity
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoanForm {
+public class LoanPaymentDto {
 
-	private Long userId;
-	private String loanType, firstName, lastName, email, phone, income, principal, term, interestRate, monthlyPayment;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 
+	private Long loanId;
+	private Long account;
+	private Float amount;
+	private LocalDateTime timestamp;
 
 	// print all variables to console
 	public void printFields() {
@@ -43,3 +58,7 @@ public class LoanForm {
 	}
 
 }
+
+
+
+
