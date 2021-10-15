@@ -1,4 +1,5 @@
-package com.ssutopia.finacial.loanService.entity;
+
+package com.ssutopia.finacial.loanService.dto;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoanPayment {
+public class LoanPaymentDto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -57,3 +58,7 @@ public class LoanPayment {
 	}
 
 }
+
+
+
+

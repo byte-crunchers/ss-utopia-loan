@@ -30,16 +30,12 @@ public class Loan {
 	private Float balance, interestRate, paymentDue, monthlyPayment;
 	private LocalDate dueDate;
 	private boolean active ;
-
 	private boolean approved ;
-
 	private boolean confirmed;
 
 
-
-
-	@OneToMany(mappedBy="loan")
-	private Set<LoanPayments> loanPayments;
+//	@OneToMany(mappedBy="loan")
+//	private Set<LoanPayments> loanPayments;
 
 
 	@ManyToOne

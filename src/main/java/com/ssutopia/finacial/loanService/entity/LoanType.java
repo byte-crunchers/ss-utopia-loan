@@ -43,9 +43,4 @@ public class LoanType {
 
     private boolean isSecured;
 
-    private int term_min;
-
-    private int term_max;
-
-
 }

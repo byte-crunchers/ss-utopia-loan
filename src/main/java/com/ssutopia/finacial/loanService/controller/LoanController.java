@@ -4,18 +4,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.ssutopia.finacial.loanService.entity.LoanSummary;
-import com.ssutopia.finacial.loanService.service.LoanService;
-
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanForm;
-import com.ssutopia.finacial.loanService.entity.LoanPayment;
+import com.ssutopia.finacial.loanService.entity.LoanPayments;
+import com.ssutopia.finacial.loanService.entity.LoanSummary;
 import com.ssutopia.finacial.loanService.service.LoanService;
+
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -35,11 +32,8 @@ import com.ssutopia.finacial.loanService.service.LoanService;
 @RequestMapping(EndpointConstants.API_V_0_1_LOANS)
 public class LoanController {
 
-  public static final String MAPPING = EndpointConstants.API_V_0_1_LOANS;
-  private final LoanService loanService;
-
-	//@Autowired
-	//private LoanService loanService;
+	public static final String MAPPING = EndpointConstants.API_V_0_1_LOANS;
+	private final LoanService loanService;
 
   
     @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
@@ -73,13 +67,13 @@ public class LoanController {
 	
 	// receive loan payment form, store in db, & print to console
 	@PostMapping(path = "/payment", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<?> applyForLoan(@RequestBody LoanPayment paymentForm) {
+	public ResponseEntity<?> applyForLoan(@RequestBody LoanPaymentDto paymentForm) {
 
 		System.out.println("Received a new loan payment:");
 
 		delay();
 
-		LoanPayment payment = loanService.createNewPayment(paymentForm);
+		LoanPayments payment = loanService.createNewPayment(paymentForm);
 
 		System.out.println("Payment:");
 		payment.printFields();
@@ -101,7 +95,7 @@ public class LoanController {
 
 	// get 1 loan payment by id
 	@GetMapping(path = "/payment/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Optional<LoanPayment> getLoanPayment(@PathVariable Long id) {
+	public Optional<LoanPayments> getLoanPayment(@PathVariable Long id) {
 		return loanService.getLoanPayment(id);
 	}
 

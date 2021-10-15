@@ -29,7 +29,6 @@ public class H2DataBootstrap implements CommandLineRunner {
 	private final LoanRepository loanRepository;
     private final LoanTypeRepository loanTypeRepository;
     private final UserRepository userRepository;
-    private final LoanRepository loanRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
     @Override
@@ -49,8 +48,8 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .password(passwordEncoder.encode("dan123"))
                 .roles("USER")
                 .permissions("")
-                .firstName("Dan")
-                .lastName("Smith")
+                .first_name("Dan")
+                .last_name("Wo")
                 .email("dan@aol.com")
                 .phone(7778889999L)
                 .build();
@@ -160,6 +159,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .address("Ap #705-3955 Ultricies St.")
                 .permissions("")
                 .build();
+        userRepository.save(User1);
 
         var Loan1 = Loan.builder()
                 .id(1L)
@@ -171,7 +171,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType1)
                 .build();
 
-        userRepository.save(User1);
         loanRepository.save(Loan1);
 
         var User2 = User.builder()
@@ -186,6 +185,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
+        userRepository.save(User2);
 
         var Loan2 = Loan.builder()
                 .id(2L)
@@ -197,7 +197,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType1)
                 .build();
 
-        userRepository.save(User2);
         loanRepository.save(Loan2);
 
 
@@ -214,7 +213,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
-
+        userRepository.save(User3);
 
         var Loan3 = Loan.builder()
                 .id(3L)
@@ -226,7 +225,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType3)
                 .build();
 
-        userRepository.save(User3);
         loanRepository.save(Loan3);
 
 
@@ -242,6 +240,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
+        userRepository.save(User4);
 
 
         var Loan4 = Loan.builder()
@@ -254,7 +253,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType2)
                 .build();
 
-        userRepository.save(User4);
         loanRepository.save(Loan4);
 
         var User5 = User.builder()
@@ -269,6 +267,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
+        userRepository.save(User5);
 
         var Loan5 = Loan.builder()
                 .id(5L)
@@ -280,7 +279,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType1)
                 .build();
 
-        userRepository.save(User5);
         loanRepository.save(Loan5);
 
         var User6 = User.builder()
@@ -295,6 +293,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
+        userRepository.save(User6);
 
 
         var Loan6 = Loan.builder()
@@ -307,7 +306,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType2)
                 .build();
 
-        userRepository.save(User6);
         loanRepository.save(Loan6);
 
 
@@ -323,6 +321,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .address("P.O. Box 749, 1638 Vel, Rd.")
                 .permissions("")
                 .build();
+        userRepository.save(User7);
 
         var Loan7 = Loan.builder()
                 .id(7L)
@@ -334,7 +333,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType4)
                 .build();
 
-        userRepository.save(User7);
         loanRepository.save(Loan7);
 
         var User8 = User.builder()
@@ -349,6 +347,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
+        userRepository.save(User8);
 
         var Loan8 = Loan.builder()
                 .id(8L)
@@ -360,7 +359,6 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .loanType(LoanType2)
                 .build();
 
-        userRepository.save(User8);
         loanRepository.save(Loan8);
 
         var User9 = User.builder()
@@ -375,70 +373,57 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .roles("USER")
                 .permissions("")
                 .build();
+        userRepository.save(User9);
 
+        //attach some loans to test user dan
+        User dan = userRepository.getById(1L);
+        
         var Loan9 = Loan.builder()
                 .id(9L)
                 .monthlyPayment(1900f)
                 .balance(78000f)
-                .dueDate(LocalDate.now())
-                .interestRate(0.09f)
-                .users(User9)
-                .loanType(LoanType5)
+                .dueDate(LocalDate.now().plusDays(30))
+                .interestRate(0.004f)
+                .paymentDue(1900f)
+                .active(true)
+                .approved(true)
+                .confirmed(true)
+                .users(dan)
+                .loanType(LoanType1)
                 .build();
 
-        userRepository.save(User9);
         loanRepository.save(Loan9);
-
-        var User10 = User.builder()
-                .id(13L)
-                .username("BananaY")
-                .first_name("Clinton")
-                .last_name("Steele")
-                .email("smoothstack@email.com")
-                .is_admin(false)
-                .address("Ap #901-4021 Commodo Av.")
-                .password(passwordEncoder.encode("dan123"))
-                .roles("USER")
-                .permissions("")
-                .build();
 
         var Loan10 = Loan.builder()
                 .id(10L)
                 .monthlyPayment(280f)
                 .balance(30000f)
-                .dueDate(LocalDate.now())
-                .interestRate(0.07f)
-                .users(User10)
-                .loanType(LoanType4)
+                .dueDate(LocalDate.now().plusDays(30))
+                .interestRate(0.007f)
+                .paymentDue(280f)
+                .active(true)
+                .approved(true)
+                .confirmed(true)
+                .users(dan)
+                .loanType(LoanType2)
                 .build();
 
-        userRepository.save(User10);
         loanRepository.save(Loan10);
-
-        var User11 = User.builder()
-                .id(14L)
-                .username("BdfdsY")
-                .first_name("Ori")
-                .last_name("Roberson")
-                .email("smoothstack@email.com")
-                .is_admin(false)
-                .address("Ap #901-4021 Commodo Av.")
-                .password(passwordEncoder.encode("dan123"))
-                .roles("USER")
-                .permissions("")
-                .build();
 
         var Loan11 = Loan.builder()
                 .id(11L)
                 .monthlyPayment(7050f)
                 .balance(80000f)
-                .dueDate(LocalDate.now())
-                .interestRate(0.07f)
-                .users(User11)
+                .dueDate(LocalDate.now().plusDays(30))
+                .interestRate(0.006f)
+                .paymentDue(0f)
+                .active(true)
+                .approved(true)
+                .confirmed(true)
+                .users(dan)
                 .loanType(LoanType4)
                 .build();
 
-        userRepository.save(User11);
         loanRepository.save(Loan11);
     }
 

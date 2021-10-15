@@ -21,7 +21,7 @@ import java.util.List;
 @Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -29,8 +29,6 @@ public class User {
 
     @NotBlank
     private String password;
-
-    private String email;
 
     private String first_name;
 
@@ -45,10 +43,6 @@ public class User {
     private String roles = "";
 
     private String permissions = "";
-
-    private String firstName = "";
-
-    private String lastName = "";
 
     private Long phone = 0L;
 

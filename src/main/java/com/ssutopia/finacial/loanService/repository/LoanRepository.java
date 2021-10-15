@@ -25,9 +25,9 @@ public interface LoanRepository extends CrudRepository<Loan, Long> {
 
     @Query(
             "select new com.ssutopia.finacial.loanService.dto.LoanStatusDto" +
-                    "( c.id, c.loanType, c.balance, c.interestRate, c.monthlyPayment, c.paymentDue, " +
-                    "c.dueDate, c.isActive, c.isApproved, c.isConfirmed )" +
-                    "from Loan c where c.user.id = ?1"
+                    "( c.id, c.loanType.id, c.balance, c.interestRate, c.monthlyPayment, c.paymentDue, " +
+                    "c.dueDate, c.active, c.approved, c.confirmed )" +
+                    "from Loan c where c.users.id = ?1"
     )
     List<LoanStatusDto> findLoansByUserId(Long id);
     
