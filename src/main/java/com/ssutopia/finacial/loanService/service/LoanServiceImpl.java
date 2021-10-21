@@ -1,7 +1,7 @@
 package com.ssutopia.finacial.loanService.service;
 
 
-import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
+import com.ssutopia.finacial.loanService.dto.PaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.User;
 import com.ssutopia.finacial.loanService.entity.Loan;
@@ -69,11 +69,9 @@ public class LoanServiceImpl implements LoanService{
 	// store loan payment, & modify loan balance
 	@Override
 	@Transactional
-	public LoanPayments createNewPayment(LoanPaymentDto paymentForm) {
+	public LoanPayments createNewPayment(PaymentDto paymentForm) {
 
-		paymentForm.setTimestamp(LocalDateTime.now());
-		
-		Loan loan = loanRepository.findById(paymentForm.getLoanId()).orElse(null);
+		Loan loan = loanRepository.findById(paymentForm.getDestinationId()).orElse(null);
 		loan.setBalance(loan.getBalance() - paymentForm.getAmount());
 		if(loan.getBalance() < 0.01)
 			loan.setBalance(0f);
@@ -87,7 +85,7 @@ public class LoanServiceImpl implements LoanService{
 		loan2.printFields();
 		
 		LoanPayments payment = LoanPayments.builder()
-				.account_id(paymentForm.getAccount())
+				.account_id(paymentForm.getOriginId())
 				.amount(paymentForm.getAmount())
 				.dateTime(LocalDateTime.now())
 				.loan(loan)
