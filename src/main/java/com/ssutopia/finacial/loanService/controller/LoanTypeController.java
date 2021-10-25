@@ -71,6 +71,10 @@ public class LoanTypeController {
 			e.printStackTrace();
 		}
 	}
+	@GetMapping(path = "/test", produces = { MediaType.APPLICATION_JSON_VALUE })
+    public String Test(){
+        return "Hi";
+    }
 
 	/*
 	 * 
