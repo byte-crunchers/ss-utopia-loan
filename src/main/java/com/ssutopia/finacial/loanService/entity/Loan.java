@@ -34,18 +34,13 @@ public class Loan {
 
 	private boolean confirmed;
 
-
-
-
 	@OneToMany(mappedBy="loan")
 	private Set<LoanPayments> loanPayments;
-
 
 	@ManyToOne
 	@JoinColumn(
 			name = "loan_type")
 	private LoanType loanType;
-
 
 	@ManyToOne
 	@JoinColumn(

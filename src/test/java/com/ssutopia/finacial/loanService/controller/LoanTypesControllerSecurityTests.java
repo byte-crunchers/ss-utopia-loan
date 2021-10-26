@@ -119,7 +119,7 @@ public class LoanTypesControllerSecurityTests {
     LoanType mockLoanType = LoanType.builder()
 
             .id("test1")
-            .isSecured(false)
+//            .isSecured(false)
             .upperRange(0.10f)
             .lowerRange(0.05f)
             .lateFee(3.00f)

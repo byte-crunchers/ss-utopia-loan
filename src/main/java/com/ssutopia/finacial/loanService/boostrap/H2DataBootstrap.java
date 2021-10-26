@@ -76,7 +76,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .upperRange(0.0065f)
                 .lowerRange(0.0026f)                
                 .lateFee(45.00f)
-                .isSecured(true)
+//                .isSecured(true)
                 .build();
 
 
@@ -87,7 +87,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .upperRange(0.0116f)
                 .lowerRange(0.0027f)                
                 .lateFee(25.00f)
-                .isSecured(true)
+//                .isSecured(true)
                 .build();
 
 
@@ -97,7 +97,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .upperRange(0.01f)
                 .lowerRange(0.0025f)                
                 .lateFee(35.00f)
-                .isSecured(false)
+//                .isSecured(false)
                 .build();
 
 
@@ -107,7 +107,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .upperRange(0.03f)
                 .lowerRange(0.005f)                
                 .lateFee(55.00f)
-                .isSecured(false)
+//                .isSecured(false)
                 .build();
 
 
@@ -117,7 +117,7 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .upperRange(0.43f)
                 .lowerRange(0.325f)                
                 .lateFee(55.00f)
-                .isSecured(false)
+//                .isSecured(false)
                 .build();
 
         loanTypeRepository.save(LoanType1);

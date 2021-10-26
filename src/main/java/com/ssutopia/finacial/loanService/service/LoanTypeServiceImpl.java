@@ -39,7 +39,7 @@ public class LoanTypeServiceImpl implements LoanTypeService{
                 .upperRange(loanTypeDto.getUpperRange())
                 .lowerRange(loanTypeDto.getLowerRange())
                 .lateFee(loanTypeDto.getLateFee())
-                .isSecured(loanTypeDto.isSecured())
+//                .isSecured(loanTypeDto.isSecured())
                 .build();
 
         loanType = loanTypeRepository.save(loanType);

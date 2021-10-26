@@ -32,8 +32,8 @@ public class LoanType {
     @NotNull
     @Builder.Default
     private float lateFee = 0.0f;
-
-    private boolean isSecured;
+//
+//    private boolean isSecured;
 
     private int term_min;
 

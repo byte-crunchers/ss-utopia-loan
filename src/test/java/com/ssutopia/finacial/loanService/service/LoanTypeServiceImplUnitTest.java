@@ -31,17 +31,17 @@ public class LoanTypeServiceImplUnitTest {
         loanType1 = LoanType.builder()
                 .id
                 ("test1")
-                .isSecured(false)
+//                .isSecured(false)
                 .build();
 
         loanType2 = LoanType.builder()
                 .id("test2")
-                .isSecured(false)
+//                .isSecured(false)
                 .build();
 
         loanType3 = LoanType.builder()
                 .id("test3")
-                .isSecured(false)
+//                .isSecured(false)
                 .build();
     }
 
@@ -55,7 +55,7 @@ public class LoanTypeServiceImplUnitTest {
         when(repository.save(any(LoanType.class))).thenReturn(loanType1);
         var result = service.createNewLoanType(loanTypeDto.builder()
         .id(loanType1.getId())
-                .isSecured(loanType1.isSecured())
+//                .isSecured(loanType1.isSecured())
         .build())
                 ;
         assertEquals(loanType1, result);
