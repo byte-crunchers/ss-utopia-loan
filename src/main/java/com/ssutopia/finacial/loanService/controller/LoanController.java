@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
+import com.ssutopia.finacial.loanService.dto.PaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanForm;
@@ -67,7 +67,7 @@ public class LoanController {
 	
 	// receive loan payment form, store in db, & print to console
 	@PostMapping(path = "/payment", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<?> applyForLoan(@RequestBody LoanPaymentDto paymentForm) {
+	public ResponseEntity<?> makeLoanPayment(@RequestBody PaymentDto paymentForm) {
 
 		System.out.println("Received a new loan payment:");
 
