@@ -1,14 +1,17 @@
 package com.ssutopia.finacial.loanService.boostrap;
 
 import com.ssutopia.finacial.loanService.entity.Loan;
+import com.ssutopia.finacial.loanService.entity.LoanPayments;
 import com.ssutopia.finacial.loanService.entity.LoanType;
 import com.ssutopia.finacial.loanService.entity.User;
+import com.ssutopia.finacial.loanService.repository.LoanPaymentRepository;
 import com.ssutopia.finacial.loanService.repository.LoanRepository;
 import com.ssutopia.finacial.loanService.repository.LoanTypeRepository;
 import com.ssutopia.finacial.loanService.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.boot.CommandLineRunner;
@@ -18,9 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 
-import java.time.LocalDate;
-
-
 @Profile("!test")
 @Component
 @RequiredArgsConstructor
@@ -28,6 +28,7 @@ public class H2DataBootstrap implements CommandLineRunner {
 	
 	private final LoanRepository loanRepository;
     private final LoanTypeRepository loanTypeRepository;
+    private final LoanPaymentRepository loanPaymentRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
@@ -425,9 +426,54 @@ public class H2DataBootstrap implements CommandLineRunner {
                 .build();
 
         loanRepository.save(Loan11);
+        
+        
+        // loan payments
+        
+        var payment1 = LoanPayments.builder()
+        		.id(1L)
+        		.account_id(22L)
+        		.amount(100.0f)
+        		.time_stamp(LocalDateTime.now().minusMonths(1))
+        		.status(1)
+        		.loan(Loan11)
+        		.build();
+        
+        loanPaymentRepository.save(payment1);
+
+        int n = 15;
+        for(int i=2; i<n; i++)
+        {
+	        var payment2 = LoanPayments.builder()
+	        		.id((long)i)
+	        		.account_id(22L)
+	        		.amount(300.0f)
+	        		.time_stamp(LocalDateTime.now().minusMonths(n-i))
+	        		.status(1)
+	        		.loan(Loan10)
+	        		.build();
+	        
+	        loanPaymentRepository.save(payment2);
+        }
+        
     }
 
-
+/*
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 
 
 

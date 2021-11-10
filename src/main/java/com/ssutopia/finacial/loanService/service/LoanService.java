@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.ssutopia.finacial.loanService.dto.PaymentDto;
+import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanForm;
@@ -22,6 +23,7 @@ public interface LoanService {
 	Optional<Loan> getLoan(Long id);
 	List<LoanStatusDto> getLoansByUserId(Long id);
 	Loan createNewLoan(LoanForm form);
+	List<LoanPaymentDto> getLoanPaymentsByLoanId(Long loanId);
 	
 }
 

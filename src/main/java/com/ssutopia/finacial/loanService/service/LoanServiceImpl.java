@@ -2,6 +2,7 @@ package com.ssutopia.finacial.loanService.service;
 
 
 import com.ssutopia.finacial.loanService.dto.PaymentDto;
+import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.User;
 import com.ssutopia.finacial.loanService.entity.Loan;
@@ -87,11 +88,18 @@ public class LoanServiceImpl implements LoanService{
 		LoanPayments payment = LoanPayments.builder()
 				.account_id(paymentForm.getOriginId())
 				.amount(paymentForm.getAmount())
-				.dateTime(LocalDateTime.now())
+				.time_stamp(LocalDateTime.now())
 				.loan(loan)
+				.status(1)
 				.build();
 				
 		return loanPaymentRepository.save(payment);
+	}
+	
+	// get loan payments by loan ID
+	@Override
+	public List<LoanPaymentDto> getLoanPaymentsByLoanId(Long loanId) {
+		return loanPaymentRepository.findPaymentsByLoanId(loanId);
 	}
 
 	// get 1 loan payment by ID

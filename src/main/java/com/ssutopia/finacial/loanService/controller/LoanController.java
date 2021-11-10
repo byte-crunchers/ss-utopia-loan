@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ssutopia.finacial.loanService.dto.PaymentDto;
+import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanForm;
 import com.ssutopia.finacial.loanService.entity.LoanPayments;
 import com.ssutopia.finacial.loanService.entity.LoanSummary;
+import com.ssutopia.finacial.loanService.entity.LoanType;
 import com.ssutopia.finacial.loanService.service.LoanService;
 
 import lombok.RequiredArgsConstructor;
@@ -86,6 +88,22 @@ public class LoanController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	// get 1 loan payment by id
+	@GetMapping(path = "/payment/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public Optional<LoanPayments> getLoanPayment(@PathVariable Long id) {
+		return loanService.getLoanPayment(id);
+	}
+
+	// get loan payments by loan ID
+	@GetMapping(path = "/payments/{loanId}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<List<LoanPaymentDto>> getLoanPaymentsByLoanId(@PathVariable Long loanId) {
+		List<LoanPaymentDto> list = loanService.getLoanPaymentsByLoanId(loanId);
+		if (list.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(list);
+	}
+
 
 	// get 1 loan by id
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -93,17 +111,12 @@ public class LoanController {
 		return loanService.getLoan(id);
 	}
 
-	// get 1 loan payment by id
-	@GetMapping(path = "/payment/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Optional<LoanPayments> getLoanPayment(@PathVariable Long id) {
-		return loanService.getLoanPayment(id);
-	}
-
 	// get all loans by user id
 	@GetMapping(path = "/myloans/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public List<LoanStatusDto> getLoansByUserId(@PathVariable Long id) {
 		return loanService.getLoansByUserId(id);
 	}
+	
 
 	// pretend to think for a few seconds while processing the form
 	private void delay() {
