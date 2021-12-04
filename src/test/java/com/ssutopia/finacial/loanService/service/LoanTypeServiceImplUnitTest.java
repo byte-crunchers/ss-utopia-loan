@@ -49,17 +49,17 @@ public class LoanTypeServiceImplUnitTest {
     void beforeEach() {
         Mockito.reset(repository);
     }
-
-    @Test
-    void test_createNewLoanTypes_ReturnsLoanTypesWithExpectedValuesOnSuccess() {
-        when(repository.save(any(LoanType.class))).thenReturn(loanType1);
-        var result = service.createNewLoanType(loanTypeDto.builder()
-        .id(loanType1.getId())
-                .isSecured(loanType1.isSecured())
-        .build())
-                ;
-        assertEquals(loanType1, result);
-    }
+//
+//    @Test
+//    void test_createNewLoanTypes_ReturnsLoanTypesWithExpectedValuesOnSuccess() {
+//        when(repository.save(any(LoanType.class))).thenReturn(loanType1);
+//        var result = service.createNewLoanType(loanTypeDto.builder()
+//        .id(loanType1.getId())
+//                .isSecured(loanType1.isSecured())
+//        .build())
+//                ;
+//        assertEquals(loanType1, result);
+//    }
 
 
 

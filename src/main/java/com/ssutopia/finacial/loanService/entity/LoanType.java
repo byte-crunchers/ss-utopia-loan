@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -17,30 +18,31 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name="loan_types")  //name of table in RDS
 public class LoanType {
     @Id
     private String id;
 
     @NotNull
     @Builder.Default
-    private float upperRange = 0.0f;
+    private Float upperRange = 0.0f;
 
     @NotNull
     @Builder.Default
-    private float lowerRange = 0.0f;
+    private Float lowerRange = 0.0f;
 
     @NotNull
     @Builder.Default
-    private int termMin = 0;
+    private Integer termMin = 0;
 
     @NotNull
     @Builder.Default
-    private int termMax = 0;
+    private Integer termMax = 0;
 
     @NotNull
     @Builder.Default
-    private float lateFee = 0.0f;
+    private Float lateFee = 0.0f;
 
-    private boolean isSecured;
+    private Boolean isSecured;
 
 }

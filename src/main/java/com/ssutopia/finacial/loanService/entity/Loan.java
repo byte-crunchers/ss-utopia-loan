@@ -19,6 +19,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="loans")  //name of table in RDS
 public class Loan {
 
 	// all columns in the loans table

@@ -1,67 +1,75 @@
 package com.ssutopia.finacial.loanService.entity;
 
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Entity
-@Data
+@Table(name="users")  //name of table in RDS
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String username;
 
-    @NotBlank
+    @Column(nullable = false)
     private String password;
-
-    private String first_name;
-
-    private String last_name;
 
     private int active;
 
-    private String address;
+    private Boolean is_admin;
+    
+    private String first_name, last_name;
 
-    private boolean is_admin;
+    public Long getId() {
+        return id;
+    }
 
-    private String roles = "";
+    public String getUsername() {
+        return username;
+    }
 
-    private String permissions = "";
+    public String getPassword() {
+        return password;
+    }
 
-    private Long phone = 0L;
+    public int getActive() {
+        return active;
+    }
 
-    private String email = "";
+    //the db only has boolean is_admin, so convert that to a string
+    public String getRoles() {
+    	if(is_admin)
+    		return "ADMIN";
+    	else
+    		return "USER";
+    }
 
-    private Float income = 0f;
+    //the db doesn't have a column for permissions
+    public String getPermissions() {
+        return "";
+    }
 
     public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
+    	if(is_admin)
+    		return Arrays.asList(new String[] {"ADMIN"});
+    	else
+    		return Arrays.asList(new String[] {"USER"});
     }
 
     public List<String> getPermissionList(){
-        if(this.permissions.length() > 0){
-            return Arrays.asList(this.permissions.split(","));
-        }
         return new ArrayList<>();
     }
 }
-

@@ -1,5 +1,7 @@
 package com.ssutopia.finacial.loanService.boostrap;
 
+/*
+ 
 import com.ssutopia.finacial.loanService.entity.Loan;
 import com.ssutopia.finacial.loanService.entity.LoanPayments;
 import com.ssutopia.finacial.loanService.entity.LoanType;
@@ -458,23 +460,7 @@ public class H2DataBootstrap implements CommandLineRunner {
         
     }
 
-/*
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- */
-
-
 
 }
+
+*/
