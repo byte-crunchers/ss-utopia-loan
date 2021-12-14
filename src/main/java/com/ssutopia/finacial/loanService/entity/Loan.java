@@ -19,6 +19,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="LOANS")
 public class Loan {
 
 	// all columns in the loans table
@@ -46,7 +47,7 @@ public class Loan {
 
 	@ManyToOne
 	@JoinColumn(
-			name = "users_id")
+			name = "user_id")
 	private User users;
 
 

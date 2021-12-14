@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name="USERS")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +34,7 @@ public class User {
 
     private int active;
 
-    private String address;
+    private String street_address;
 
     private boolean is_admin;
 
@@ -48,7 +46,6 @@ public class User {
 
     private String email = "";
 
-    private Float income = 0f;
 
     public List<String> getRoleList(){
         if(this.roles.length() > 0){
