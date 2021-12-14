@@ -57,9 +57,10 @@ public class LoanServiceImpl implements LoanService{
 		// convert form fields into new loan instance
         var loan = Loan.builder()
                 .monthlyPayment(Float.parseFloat(form.getMonthlyPayment()))
-                .balance(Float.parseFloat(form.getPrincipal()))
+                .balance(-Float.parseFloat(form.getPrincipal()))
                 .dueDate(LocalDate.now().plusDays(30))
                 .interestRate(Float.parseFloat(form.getInterestRate()))
+                .paymentDue(0f)
                 .users(user)
                 .loanType(loanType)
                 .build();
@@ -73,8 +74,8 @@ public class LoanServiceImpl implements LoanService{
 	public LoanPayments createNewPayment(PaymentDto paymentForm) {
 
 		Loan loan = loanRepository.findById(paymentForm.getDestinationId()).orElse(null);
-		loan.setBalance(loan.getBalance() - paymentForm.getAmount());
-		if(loan.getBalance() < 0.01)
+		loan.setBalance(loan.getBalance() + paymentForm.getAmount());
+		if(Math.abs(loan.getBalance()) < 0.01)
 			loan.setBalance(0f);
 		
 		loan.setPaymentDue(loan.getPaymentDue() - paymentForm.getAmount());

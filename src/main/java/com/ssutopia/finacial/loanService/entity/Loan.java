@@ -24,7 +24,7 @@ public class Loan {
 
 	// all columns in the loans table
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 
