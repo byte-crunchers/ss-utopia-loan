@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="loan_payments")
+
 public class LoanPayments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class LoanPayments {
 
     private float amount;
 
-    private LocalDateTime dateTime;
+    private LocalDateTime time_stamp;
 
     private int status;
 

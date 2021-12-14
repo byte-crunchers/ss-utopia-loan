@@ -46,8 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //user submit loan application
                 .antMatchers("/loans/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/users/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated();
-        ;
     }
 
     @Bean
