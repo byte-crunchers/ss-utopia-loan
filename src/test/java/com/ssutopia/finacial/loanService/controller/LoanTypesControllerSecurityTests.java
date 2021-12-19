@@ -128,15 +128,15 @@ public class LoanTypesControllerSecurityTests {
     User mockAdminUser = User.builder()
             .username("admin")
             .password("admin123")
-            .roles("ADMIN")
-            .permissions("ACCESS_TEST1,ACCESS_TEST2")
+//            .roles("ADMIN")
+//            .permissions("ACCESS_TEST1,ACCESS_TEST2")
             .build();
 
     User mockUser1 = User.builder()
             .username("adan")
             .password("adan123")
-            .roles("USER")
-            .permissions("")
+//            .roles("USER")
+//            .permissions("")
             .build();
 
 

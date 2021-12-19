@@ -19,12 +19,12 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LOANS")
+@Table(name="loans")  //name of table in RDS
 public class Loan {
 
 	// all columns in the loans table
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 
