@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name="users")  //name of table in RDS
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -31,9 +35,7 @@ public class User {
 
     private Boolean is_admin;
     
-    private String first_name, last_name;
-
-    private String street_address;
+    private String first_name, last_name, email;
 
     public Long getId() {
         return id;

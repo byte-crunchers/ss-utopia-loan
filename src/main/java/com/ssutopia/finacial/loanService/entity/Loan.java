@@ -47,7 +47,7 @@ public class Loan {
 
 	@ManyToOne
 	@JoinColumn(
-			name = "user_id")
+			name = "users_id")
 	private User users;
 
 

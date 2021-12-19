@@ -69,34 +69,34 @@ public class LoanController {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(loan.getId())
 				.toUri();
 
-
-		//sending confirm request to email server
-		String url = EndpointConstants.API_V_0_1_LOANSEMAILCONFIRM;
-
-		// for testing email server
-		// cause email use h2, it only has a few dummy data
-		int min = 1;
-		int max = 13;
-		int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
-
-		RestTemplate restTemplate = new RestTemplate();
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_XML);
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("email", loan.getUsers().getEmail());
-		map.put("firstName", loan.getUsers().getFirst_name());
-		map.put("loan_id", random_int);
-
-
-
-		try
-		{ResponseEntity<Void> response = restTemplate.postForEntity(url, map, Void.class);
-		}catch (Exception ex){
-			System.out.println(ex.toString());
+		boolean sendEmail = false;
+		if(sendEmail) {
+			//sending confirm request to email server
+			String url = EndpointConstants.API_V_0_1_LOANSEMAILCONFIRM;
+	
+			// for testing email server
+			// cause email use h2, it only has a few dummy data
+			int min = 1;
+			int max = 13;
+			int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
+	
+			RestTemplate restTemplate = new RestTemplate();
+	
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_XML);
+	
+			Map<String, Object> map = new HashMap<>();
+			map.put("email", loan.getUsers().getEmail());
+			map.put("firstName", loan.getUsers().getFirst_name());
+			map.put("loan_id", random_int);
+	
+			try
+			{ResponseEntity<Void> response = restTemplate.postForEntity(url, map, Void.class);
+			}catch (Exception ex){
+				System.out.println(ex.toString());
+			}
 		}
-
+		
 		// return status code 201
 		return ResponseEntity.created(location).build();
 	}
