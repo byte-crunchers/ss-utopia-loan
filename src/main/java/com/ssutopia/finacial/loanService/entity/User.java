@@ -33,6 +33,8 @@ public class User {
     
     private String first_name, last_name;
 
+    private String street_address;
+
     public Long getId() {
         return id;
     }
