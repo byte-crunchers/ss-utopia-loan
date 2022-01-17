@@ -2,6 +2,7 @@ package com.ssutopia.finacial.loanService.service;
 
 
 import com.ssutopia.finacial.loanService.dto.PaymentDto;
+import com.ssutopia.finacial.loanService.controller.EndpointConstants;
 import com.ssutopia.finacial.loanService.dto.LoanPaymentDto;
 import com.ssutopia.finacial.loanService.dto.LoanStatusDto;
 import com.ssutopia.finacial.loanService.entity.User;
@@ -19,12 +20,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -68,33 +78,60 @@ public class LoanServiceImpl implements LoanService{
 		return loanRepository.save(loan);
 	}
 
-	// store loan payment, & modify loan balance
+	// store loan payment, & modify loan balance & modify account balance
 	@Override
 	@Transactional
 	public LoanPayments createNewPayment(PaymentDto paymentForm) {
 
-		Loan loan = loanRepository.findById(paymentForm.getDestinationId()).orElse(null);
-		loan.setBalance(loan.getBalance() + paymentForm.getAmount());
-		if(Math.abs(loan.getBalance()) < 0.01)
-			loan.setBalance(0f);
+		try {
+			//modify account balance by calling account microservice
+			
+			String url = EndpointConstants.API_V_0_1_LOANPAYMENT;
+	
+			RestTemplate restTemplate = new RestTemplate();
+	
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+	
+			HttpEntity<PaymentDto> entity = new HttpEntity<>(paymentForm, headers);
+			
+			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+			
+			if(response.getStatusCode() != HttpStatus.OK)
+				return null;
+			
+			//modify loan balance
+			
+			Loan loan = loanRepository.findById(paymentForm.getDestinationId()).orElse(null);
+			loan.setBalance(loan.getBalance() + paymentForm.getAmount());
+			if(Math.abs(loan.getBalance()) < 0.01)
+				loan.setBalance(0f);
+			
+			loan.setPaymentDue(loan.getPaymentDue() - paymentForm.getAmount());
+			if(loan.getPaymentDue() < 0.01)  //handle negative numbers & rounding errors
+				loan.setPaymentDue(0f);
+			
+			Loan loan2 = loanRepository.save(loan);
+			System.out.println("Loan:");
+			loan2.printFields();
+			
+			//create loan payment entity
+			
+			LoanPayments payment = LoanPayments.builder()
+					.account_id(paymentForm.getOriginId())
+					.amount(paymentForm.getAmount())
+					.time_stamp(LocalDateTime.now())
+					.loan(loan)
+					.status(1)
+					.build();
+					
+			return loanPaymentRepository.save(payment);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		
-		loan.setPaymentDue(loan.getPaymentDue() - paymentForm.getAmount());
-		if(loan.getPaymentDue() < 0.01)  //handle negative numbers & rounding errors
-			loan.setPaymentDue(0f);
-		
-		Loan loan2 = loanRepository.save(loan);
-		System.out.println("Loan:");
-		loan2.printFields();
-		
-		LoanPayments payment = LoanPayments.builder()
-				.account_id(paymentForm.getOriginId())
-				.amount(paymentForm.getAmount())
-				.time_stamp(LocalDateTime.now())
-				.loan(loan)
-				.status(1)
-				.build();
-				
-		return loanPaymentRepository.save(payment);
+		return null;
 	}
 	
 	// get loan payments by loan ID

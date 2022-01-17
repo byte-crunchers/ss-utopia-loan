@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,9 +103,6 @@ public class LoanController {
 	}
 
 
-
-
-	
 	// receive loan payment form, store in db, & print to console
 	@PostMapping(path = "/payment", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<?> makeLoanPayment(@RequestBody PaymentDto paymentForm) {
@@ -115,15 +113,21 @@ public class LoanController {
 
 		LoanPayments payment = loanService.createNewPayment(paymentForm);
 
-		System.out.println("Payment:");
-		payment.printFields();
+		if(payment != null) {
+			System.out.println("Payment:");
+			payment.printFields();
 
-		// set location header
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(payment.getId())
-				.toUri();
+			// set location header
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(payment.getId())
+					.toUri();
+			
+			return ResponseEntity.created(location).build();  // status code 201
+		}
+		else {
+			
+			return ResponseEntity.unprocessableEntity().build();  // status code 422
+		}
 
-		// return status code 201
-		return ResponseEntity.created(location).build();
 	}
 	
 	// get 1 loan payment by id
