@@ -81,7 +81,7 @@ public class LoanServiceImpl implements LoanService{
 	// store loan payment, & modify loan balance & modify account balance
 	@Override
 	@Transactional
-	public LoanPayments createNewPayment(PaymentDto paymentForm) {
+	public LoanPayments createNewPayment(String token, PaymentDto paymentForm) {
 
 		try {
 			//modify account balance by calling account microservice
@@ -92,7 +92,8 @@ public class LoanServiceImpl implements LoanService{
 	
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-	
+			headers.set("Authorization", token);  //pass thru jwt to restTemplate request
+			
 			HttpEntity<PaymentDto> entity = new HttpEntity<>(paymentForm, headers);
 			
 			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);

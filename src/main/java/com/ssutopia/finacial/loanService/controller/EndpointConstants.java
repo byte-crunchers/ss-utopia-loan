@@ -7,7 +7,7 @@ public class EndpointConstants {
 
     public static final String API_V_0_1_LOANSEMAILCONFIRM = "http://192.168.1.194:8090/api/v1/signup/loan";
 
-    public static final String API_V_0_1_LOANPAYMENT = "http://api2.utopia-financial.com:8088/api/v0.1/accounts/loanpayment";
+    public static final String API_V_0_1_LOANPAYMENT = "https://accounts.utopia-financial.com/api/v0.1/accounts/loanpayment";
 
     private EndpointConstants() {
     }

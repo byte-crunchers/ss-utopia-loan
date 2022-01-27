@@ -18,7 +18,7 @@ public interface LoanService {
 
 
 	List<LoanSummary> getAllLoans();
-	LoanPayments createNewPayment(PaymentDto payment);
+	LoanPayments createNewPayment(String token, PaymentDto payment);
 	Optional<LoanPayments> getLoanPayment(Long id);
 	Optional<Loan> getLoan(Long id);
 	List<LoanStatusDto> getLoansByUserId(Long id);

@@ -8,15 +8,20 @@ import java.util.Optional;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +35,9 @@ import com.ssutopia.finacial.loanService.entity.LoanForm;
 import com.ssutopia.finacial.loanService.entity.LoanPayments;
 import com.ssutopia.finacial.loanService.entity.LoanSummary;
 import com.ssutopia.finacial.loanService.entity.LoanType;
+import com.ssutopia.finacial.loanService.entity.User;
+import com.ssutopia.finacial.loanService.repository.UserRepository;
+import com.ssutopia.finacial.loanService.security.UserPrincipal;
 import com.ssutopia.finacial.loanService.service.LoanService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,7 +51,7 @@ public class LoanController {
 
 	public static final String MAPPING = EndpointConstants.API_V_0_1_LOANS;
 	private final LoanService loanService;
-
+	private final UserRepository userRepository;
   
     @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public ResponseEntity<List<LoanSummary>> getAllLoans(){
@@ -105,13 +113,13 @@ public class LoanController {
 
 	// receive loan payment form, store in db, & print to console
 	@PostMapping(path = "/payment", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<?> makeLoanPayment(@RequestBody PaymentDto paymentForm) {
+	public ResponseEntity<?> makeLoanPayment(@RequestHeader("Authorization") String token, @RequestBody PaymentDto paymentForm) {
 
 		System.out.println("Received a new loan payment:");
 
 		delay();
 
-		LoanPayments payment = loanService.createNewPayment(paymentForm);
+		LoanPayments payment = loanService.createNewPayment(token, paymentForm);
 
 		if(payment != null) {
 			System.out.println("Payment:");
@@ -155,8 +163,17 @@ public class LoanController {
 
 	// get all loans by user id
 	@GetMapping(path = "/myloans/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<LoanStatusDto> getLoansByUserId(@PathVariable Long id) {
-		return loanService.getLoansByUserId(id);
+	public ResponseEntity<List<LoanStatusDto>> getLoansByUserId(@PathVariable Long id, Authentication authentication) {
+
+		//only allow access if user ID matches, or if user is an admin
+		User user = userRepository.findByUsername(authentication.getName());
+		
+		if("ADMIN".equals(user.getRoles()) || id.equals(user.getId())) {
+			return ResponseEntity.ok(loanService.getLoansByUserId(id));
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}
 	}
 	
 
